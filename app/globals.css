@@ -1,0 +1,124 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Design tokens — ver docs/DESIGN.md para hex, papel e contraste de cada um.
+ * Valores em canais RGB para permitir opacidade via Tailwind (bg-ink/60).
+ */
+:root {
+  --ink: 14 14 14; /* #0E0E0E asfalto — fundo escuro e texto principal */
+  --ink-2: 28 28 27; /* #1C1C1B superfície sobre ink */
+  --ink-3: 44 44 42; /* #2C2C2A bordas/realces sobre ink */
+  --paper: 245 243 238; /* #F5F3EE fundo claro, papel de laudo */
+  --paper-2: 233 230 222; /* #E9E6DE superfície sobre paper */
+  --line: 207 202 192; /* #CFCAC0 linhas sobre paper */
+  --line-dark: 64 64 60; /* #40403C linhas sobre ink */
+  --muted: 84 83 78; /* #54534E texto secundário sobre paper (7.0:1) */
+  --muted-dark: 176 173 164; /* #B0ADA4 texto secundário sobre ink (8.6:1) */
+  --signal: 255 204 0; /* #FFCC00 amarelo Furtil — preenchimento, nunca texto sobre claro */
+  --signal-deep: 122 92 0; /* #7A5C00 amarelo legível sobre paper (5.6:1) */
+  --mercosul: 0 51 153; /* #003399 faixa azul da placa Mercosul */
+  --ok: 22 101 52; /* #166534 confirmação sobre paper (6.6:1) */
+  --danger: 176 30 30; /* #B01E1E erro sobre paper (6.2:1) */
+  --white: 255 255 255;
+  --whats: 15 122 66; /* #0F7A42 botão WhatsApp com texto branco (5.4:1) */
+
+  color-scheme: light;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    @apply bg-paper font-sans text-ink antialiased;
+    font-feature-settings:
+      "ss02",
+      "tnum" 0;
+  }
+  :focus-visible {
+    outline: 3px solid rgb(var(--signal));
+    outline-offset: 2px;
+    box-shadow: 0 0 0 5px rgb(var(--ink));
+    border-radius: 4px;
+  }
+  /* Títulos que recebem foco programático (mudança de etapa) não ganham anel. */
+  [tabindex="-1"]:focus,
+  [tabindex="-1"]:focus-visible {
+    outline: none;
+    box-shadow: none;
+  }
+  ::selection {
+    background: rgb(var(--signal));
+    color: rgb(var(--ink));
+  }
+  .num {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer components {
+  .wrap {
+    @apply mx-auto w-full max-w-page px-4 sm:px-6 lg:px-8;
+  }
+  .btn {
+    @apply inline-flex min-h-tap items-center justify-center gap-2 rounded-md px-5 font-sans text-[0.95rem] font-semibold transition-[transform,background-color] duration-150 active:translate-y-px disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-signal {
+    @apply btn bg-signal text-ink hover:bg-white;
+  }
+  .btn-ink {
+    @apply btn bg-ink text-paper hover:bg-ink-3;
+  }
+  .btn-ghost {
+    @apply btn border border-current bg-transparent;
+  }
+  .btn-whats {
+    @apply btn bg-whats text-white hover:bg-ink;
+  }
+  .eyebrow {
+    @apply font-mono text-[0.72rem] font-medium uppercase tracking-[0.14em];
+  }
+  .h-display {
+    @apply font-display font-extrabold uppercase leading-[0.92] tracking-[-0.01em];
+    font-stretch: 75%;
+    font-variation-settings: "wdth" 75;
+  }
+  .field {
+    @apply min-h-tap w-full rounded-md border border-line bg-white px-3 text-base text-ink;
+  }
+  /* Faixa de "tread" — textura de banda de rodagem usada como divisória. */
+  .tread {
+    background-image: repeating-linear-gradient(
+      100deg,
+      rgb(var(--ink)) 0 10px,
+      transparent 10px 16px,
+      rgb(var(--ink)) 16px 20px,
+      transparent 20px 24px
+    );
+    background-size: 48px 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+::view-transition-group(plate) {
+  animation-duration: 0.45s;
+  animation-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1);
+}

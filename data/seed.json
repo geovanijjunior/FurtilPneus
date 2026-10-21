@@ -1,0 +1,649 @@
+{
+  "_aviso": "Dados ilustrativos para desenvolvimento. Códigos FIPE, preços e placas são fictícios.",
+  "veiculos": [
+    {
+      "id": "fiat-mobi-like-10",
+      "marca": "Fiat",
+      "modelo": "Mobi",
+      "versao": "Like 1.0",
+      "anos": [
+        2017,
+        2024
+      ],
+      "fipe": "MOCK-001",
+      "medidas": [
+        {
+          "medida": "175/65 R14",
+          "nota": null
+        }
+      ]
+    },
+    {
+      "id": "renault-kwid-zen-10",
+      "marca": "Renault",
+      "modelo": "Kwid",
+      "versao": "Zen 1.0",
+      "anos": [
+        2018,
+        2024
+      ],
+      "fipe": "MOCK-002",
+      "medidas": [
+        {
+          "medida": "165/70 R14",
+          "nota": null
+        }
+      ]
+    },
+    {
+      "id": "vw-gol-10-mpi",
+      "marca": "Volkswagen",
+      "modelo": "Gol",
+      "versao": "1.0 MPI",
+      "anos": [
+        2017,
+        2023
+      ],
+      "fipe": "MOCK-003",
+      "medidas": [
+        {
+          "medida": "175/70 R14",
+          "nota": "Rodas de aço aro 14 com calota"
+        },
+        {
+          "medida": "195/55 R15",
+          "nota": "Rodas de liga aro 15 (opcional de fábrica)"
+        }
+      ]
+    },
+    {
+      "id": "chevrolet-onix-lt-10",
+      "marca": "Chevrolet",
+      "modelo": "Onix",
+      "versao": "LT 1.0",
+      "anos": [
+        2020,
+        2025
+      ],
+      "fipe": "MOCK-004",
+      "medidas": [
+        {
+          "medida": "185/65 R15",
+          "nota": "Rodas aro 15"
+        },
+        {
+          "medida": "195/55 R16",
+          "nota": "Rodas de liga aro 16 (pacote opcional)"
+        }
+      ]
+    },
+    {
+      "id": "hyundai-hb20-comfort-10",
+      "marca": "Hyundai",
+      "modelo": "HB20",
+      "versao": "Comfort 1.0",
+      "anos": [
+        2020,
+        2025
+      ],
+      "fipe": "MOCK-005",
+      "medidas": [
+        {
+          "medida": "175/70 R14",
+          "nota": "Rodas de aço aro 14"
+        },
+        {
+          "medida": "185/60 R15",
+          "nota": "Rodas de liga aro 15"
+        }
+      ]
+    },
+    {
+      "id": "fiat-argo-drive-10",
+      "marca": "Fiat",
+      "modelo": "Argo",
+      "versao": "Drive 1.0",
+      "anos": [
+        2018,
+        2025
+      ],
+      "fipe": "MOCK-006",
+      "medidas": [
+        {
+          "medida": "175/65 R14",
+          "nota": null
+        }
+      ]
+    },
+    {
+      "id": "vw-polo-200tsi",
+      "marca": "Volkswagen",
+      "modelo": "Polo",
+      "versao": "200 TSI 1.0 Turbo",
+      "anos": [
+        2018,
+        2025
+      ],
+      "fipe": "MOCK-007",
+      "medidas": [
+        {
+          "medida": "195/55 R16",
+          "nota": null
+        }
+      ]
+    },
+    {
+      "id": "toyota-corolla-xei-20",
+      "marca": "Toyota",
+      "modelo": "Corolla",
+      "versao": "XEi 2.0",
+      "anos": [
+        2020,
+        2025
+      ],
+      "fipe": "MOCK-008",
+      "medidas": [
+        {
+          "medida": "205/55 R16",
+          "nota": "Rodas aro 16"
+        },
+        {
+          "medida": "225/45 R17",
+          "nota": "Rodas aro 17"
+        }
+      ]
+    },
+    {
+      "id": "jeep-renegade-longitude-18",
+      "marca": "Jeep",
+      "modelo": "Renegade",
+      "versao": "Longitude 1.8",
+      "anos": [
+        2017,
+        2021
+      ],
+      "fipe": "MOCK-009",
+      "medidas": [
+        {
+          "medida": "215/60 R17",
+          "nota": null
+        }
+      ]
+    },
+    {
+      "id": "fiat-strada-freedom-13",
+      "marca": "Fiat",
+      "modelo": "Strada",
+      "versao": "Freedom 1.3",
+      "anos": [
+        2021,
+        2025
+      ],
+      "fipe": "MOCK-010",
+      "medidas": [
+        {
+          "medida": "195/65 R15",
+          "nota": null
+        }
+      ]
+    },
+    {
+      "id": "honda-hrv-exl-18",
+      "marca": "Honda",
+      "modelo": "HR-V",
+      "versao": "EXL 1.8",
+      "anos": [
+        2017,
+        2021
+      ],
+      "fipe": "MOCK-011",
+      "medidas": [
+        {
+          "medida": "215/55 R17",
+          "nota": null
+        }
+      ]
+    },
+    {
+      "id": "hyundai-creta-action-16",
+      "marca": "Hyundai",
+      "modelo": "Creta",
+      "versao": "Action 1.6",
+      "anos": [
+        2022,
+        2025
+      ],
+      "fipe": "MOCK-012",
+      "medidas": [
+        {
+          "medida": "205/65 R16",
+          "nota": null
+        }
+      ]
+    },
+    {
+      "id": "nissan-kicks-sv-16",
+      "marca": "Nissan",
+      "modelo": "Kicks",
+      "versao": "SV 1.6",
+      "anos": [
+        2017,
+        2025
+      ],
+      "fipe": "MOCK-013",
+      "medidas": [
+        {
+          "medida": "205/60 R16",
+          "nota": null
+        }
+      ]
+    },
+    {
+      "id": "chevrolet-tracker-lt-10t",
+      "marca": "Chevrolet",
+      "modelo": "Tracker",
+      "versao": "LT 1.0 Turbo",
+      "anos": [
+        2021,
+        2025
+      ],
+      "fipe": "MOCK-014",
+      "medidas": [
+        {
+          "medida": "205/60 R16",
+          "nota": "Rodas aro 16"
+        },
+        {
+          "medida": "215/55 R17",
+          "nota": "Rodas de liga aro 17"
+        }
+      ]
+    },
+    {
+      "id": "vw-tcross-200tsi",
+      "marca": "Volkswagen",
+      "modelo": "T-Cross",
+      "versao": "200 TSI 1.0 Turbo",
+      "anos": [
+        2020,
+        2025
+      ],
+      "fipe": "MOCK-015",
+      "medidas": [
+        {
+          "medida": "205/60 R16",
+          "nota": null
+        }
+      ]
+    }
+  ],
+  "produtos": [
+    {
+      "id": "westlake-rp18-175-70-r13",
+      "marca": "Westlake",
+      "linha": "RP18",
+      "medida": "175/70 R13",
+      "indiceCargaVelocidade": "82T",
+      "precoVista": 189.9,
+      "precoSemTroca": 214.9,
+      "parcelas": 10,
+      "garantiaAnos": 5,
+      "lojas": [
+        "guarulhos",
+        "tremembe"
+      ]
+    },
+    {
+      "id": "westlake-rp18-165-70-r14",
+      "marca": "Westlake",
+      "linha": "RP18",
+      "medida": "165/70 R14",
+      "indiceCargaVelocidade": "81T",
+      "precoVista": 199.9,
+      "precoSemTroca": 224.9,
+      "parcelas": 10,
+      "garantiaAnos": 5,
+      "lojas": [
+        "guarulhos",
+        "tremembe",
+        "vila-formosa"
+      ]
+    },
+    {
+      "id": "westlake-rp18-175-65-r14",
+      "marca": "Westlake",
+      "linha": "RP18",
+      "medida": "175/65 R14",
+      "indiceCargaVelocidade": "82H",
+      "precoVista": 199.9,
+      "precoSemTroca": 224.9,
+      "parcelas": 10,
+      "garantiaAnos": 5,
+      "lojas": [
+        "guarulhos",
+        "tremembe",
+        "vila-formosa"
+      ]
+    },
+    {
+      "id": "pirelli-cinturato-p1-175-65-r14",
+      "marca": "Pirelli",
+      "linha": "Cinturato P1",
+      "medida": "175/65 R14",
+      "indiceCargaVelocidade": "86T",
+      "precoVista": 389.9,
+      "precoSemTroca": null,
+      "parcelas": 10,
+      "garantiaAnos": 5,
+      "lojas": [
+        "guarulhos",
+        "tremembe"
+      ]
+    },
+    {
+      "id": "goodyear-direction-touring-2-175-70-r14",
+      "marca": "Goodyear",
+      "linha": "Direction Touring 2",
+      "medida": "175/70 R14",
+      "indiceCargaVelocidade": "88T",
+      "precoVista": 359.9,
+      "precoSemTroca": null,
+      "parcelas": 10,
+      "garantiaAnos": 5,
+      "lojas": [
+        "guarulhos",
+        "tremembe",
+        "vila-formosa"
+      ]
+    },
+    {
+      "id": "westlake-rp18-175-70-r14",
+      "marca": "Westlake",
+      "linha": "RP18",
+      "medida": "175/70 R14",
+      "indiceCargaVelocidade": "84T",
+      "precoVista": 199.9,
+      "precoSemTroca": 224.9,
+      "parcelas": 10,
+      "garantiaAnos": 5,
+      "lojas": [
+        "guarulhos",
+        "tremembe",
+        "vila-formosa"
+      ]
+    },
+    {
+      "id": "westlake-rp18-185-60-r15",
+      "marca": "Westlake",
+      "linha": "RP18",
+      "medida": "185/60 R15",
+      "indiceCargaVelocidade": "84H",
+      "precoVista": 239.9,
+      "precoSemTroca": 264.9,
+      "parcelas": 10,
+      "garantiaAnos": 5,
+      "lojas": [
+        "guarulhos",
+        "tremembe"
+      ]
+    },
+    {
+      "id": "continental-powercontact-2-185-60-r15",
+      "marca": "Continental",
+      "linha": "PowerContact 2",
+      "medida": "185/60 R15",
+      "indiceCargaVelocidade": "88H",
+      "precoVista": 489.9,
+      "precoSemTroca": null,
+      "parcelas": 10,
+      "garantiaAnos": 5,
+      "lojas": [
+        "guarulhos",
+        "tremembe",
+        "vila-formosa"
+      ]
+    },
+    {
+      "id": "westlake-rp18-185-65-r15",
+      "marca": "Westlake",
+      "linha": "RP18",
+      "medida": "185/65 R15",
+      "indiceCargaVelocidade": "88H",
+      "precoVista": 239.9,
+      "precoSemTroca": 264.9,
+      "parcelas": 10,
+      "garantiaAnos": 5,
+      "lojas": [
+        "guarulhos",
+        "tremembe",
+        "vila-formosa"
+      ]
+    },
+    {
+      "id": "michelin-primacy-4-185-65-r15",
+      "marca": "Michelin",
+      "linha": "Primacy 4",
+      "medida": "185/65 R15",
+      "indiceCargaVelocidade": "92H",
+      "precoVista": 629.9,
+      "precoSemTroca": null,
+      "parcelas": 10,
+      "garantiaAnos": 5,
+      "lojas": [
+        "guarulhos",
+        "tremembe"
+      ]
+    },
+    {
+      "id": "goodyear-direction-sport-2-195-55-r15",
+      "marca": "Goodyear",
+      "linha": "Direction Sport 2",
+      "medida": "195/55 R15",
+      "indiceCargaVelocidade": "85V",
+      "precoVista": 419.9,
+      "precoSemTroca": null,
+      "parcelas": 10,
+      "garantiaAnos": 5,
+      "lojas": [
+        "guarulhos",
+        "tremembe",
+        "vila-formosa"
+      ]
+    },
+    {
+      "id": "westlake-rp18-195-65-r15",
+      "marca": "Westlake",
+      "linha": "RP18",
+      "medida": "195/65 R15",
+      "indiceCargaVelocidade": "91H",
+      "precoVista": 249.9,
+      "precoSemTroca": 274.9,
+      "parcelas": 10,
+      "garantiaAnos": 5,
+      "lojas": [
+        "guarulhos",
+        "tremembe",
+        "vila-formosa"
+      ]
+    },
+    {
+      "id": "pirelli-scorpion-195-65-r15",
+      "marca": "Pirelli",
+      "linha": "Scorpion",
+      "medida": "195/65 R15",
+      "indiceCargaVelocidade": "95H",
+      "precoVista": 519.9,
+      "precoSemTroca": null,
+      "parcelas": 10,
+      "garantiaAnos": 5,
+      "lojas": [
+        "guarulhos",
+        "tremembe"
+      ]
+    },
+    {
+      "id": "westlake-z-107-195-55-r16",
+      "marca": "Westlake",
+      "linha": "Z-107",
+      "medida": "195/55 R16",
+      "indiceCargaVelocidade": "87V",
+      "precoVista": 269.9,
+      "precoSemTroca": 294.9,
+      "parcelas": 10,
+      "garantiaAnos": 5,
+      "lojas": [
+        "guarulhos",
+        "tremembe",
+        "vila-formosa"
+      ]
+    },
+    {
+      "id": "bridgestone-turanza-er300-195-55-r16",
+      "marca": "Bridgestone",
+      "linha": "Turanza ER300",
+      "medida": "195/55 R16",
+      "indiceCargaVelocidade": "87H",
+      "precoVista": 589.9,
+      "precoSemTroca": null,
+      "parcelas": 10,
+      "garantiaAnos": 5,
+      "lojas": [
+        "guarulhos",
+        "tremembe",
+        "vila-formosa"
+      ]
+    },
+    {
+      "id": "westlake-z-107-205-55-r16",
+      "marca": "Westlake",
+      "linha": "Z-107",
+      "medida": "205/55 R16",
+      "indiceCargaVelocidade": "91V",
+      "precoVista": 269.9,
+      "precoSemTroca": 294.9,
+      "parcelas": 10,
+      "garantiaAnos": 5,
+      "lojas": [
+        "guarulhos",
+        "tremembe"
+      ]
+    },
+    {
+      "id": "michelin-primacy-4-205-55-r16",
+      "marca": "Michelin",
+      "linha": "Primacy 4",
+      "medida": "205/55 R16",
+      "indiceCargaVelocidade": "91V",
+      "precoVista": 819.9,
+      "precoSemTroca": null,
+      "parcelas": 10,
+      "garantiaAnos": 5,
+      "lojas": [
+        "guarulhos",
+        "tremembe",
+        "vila-formosa"
+      ]
+    },
+    {
+      "id": "pirelli-scorpion-205-60-r16",
+      "marca": "Pirelli",
+      "linha": "Scorpion",
+      "medida": "205/60 R16",
+      "indiceCargaVelocidade": "92H",
+      "precoVista": 649.9,
+      "precoSemTroca": null,
+      "parcelas": 10,
+      "garantiaAnos": 5,
+      "lojas": [
+        "guarulhos",
+        "tremembe",
+        "vila-formosa"
+      ]
+    },
+    {
+      "id": "westlake-su318-205-60-r16",
+      "marca": "Westlake",
+      "linha": "SU318",
+      "medida": "205/60 R16",
+      "indiceCargaVelocidade": "92H",
+      "precoVista": 299.9,
+      "precoSemTroca": 324.9,
+      "parcelas": 10,
+      "garantiaAnos": 5,
+      "lojas": [
+        "guarulhos",
+        "tremembe"
+      ]
+    },
+    {
+      "id": "continental-crosscontact-atr-205-65-r16",
+      "marca": "Continental",
+      "linha": "CrossContact ATR",
+      "medida": "205/65 R16",
+      "indiceCargaVelocidade": "95H",
+      "precoVista": 699.9,
+      "precoSemTroca": null,
+      "parcelas": 10,
+      "garantiaAnos": 5,
+      "lojas": [
+        "guarulhos",
+        "tremembe",
+        "vila-formosa"
+      ]
+    },
+    {
+      "id": "dunlop-grandtrek-pt5-215-55-r17",
+      "marca": "Dunlop",
+      "linha": "Grandtrek PT5",
+      "medida": "215/55 R17",
+      "indiceCargaVelocidade": "94V",
+      "precoVista": 759.9,
+      "precoSemTroca": null,
+      "parcelas": 10,
+      "garantiaAnos": 5,
+      "lojas": [
+        "guarulhos",
+        "tremembe",
+        "vila-formosa"
+      ]
+    },
+    {
+      "id": "bridgestone-dueler-h-t-684-215-60-r17",
+      "marca": "Bridgestone",
+      "linha": "Dueler H/T 684",
+      "medida": "215/60 R17",
+      "indiceCargaVelocidade": "96H",
+      "precoVista": 829.9,
+      "precoSemTroca": null,
+      "parcelas": 10,
+      "garantiaAnos": 5,
+      "lojas": [
+        "guarulhos",
+        "tremembe"
+      ]
+    },
+    {
+      "id": "goodyear-eagle-sport-2-225-45-r17",
+      "marca": "Goodyear",
+      "linha": "Eagle Sport 2",
+      "medida": "225/45 R17",
+      "indiceCargaVelocidade": "94W",
+      "precoVista": 689.9,
+      "precoSemTroca": null,
+      "parcelas": 10,
+      "garantiaAnos": 5,
+      "lojas": [
+        "guarulhos",
+        "tremembe",
+        "vila-formosa"
+      ]
+    }
+  ],
+  "placasDeTeste": {
+    "ABC1D23": "fiat-mobi-like-10",
+    "BRA2E19": "chevrolet-onix-lt-10",
+    "FUR7T11": "toyota-corolla-xei-20",
+    "GOL1234": "vw-gol-10-mpi",
+    "QWE4R56": "nissan-kicks-sv-16"
+  }
+}
