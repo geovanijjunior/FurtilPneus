@@ -26,6 +26,7 @@ type Step =
   | { kind: "offers" };
 
 const STEPS = ["Placa", "Veículo", "Medida", "Pneus"] as const;
+const EXAMPLE_PLATES = ["ABC1D23", "BRA2E19", "FUR7T11", "GOL-1234"];
 
 function stepIndex(s: Step) {
   switch (s.kind) {
@@ -53,6 +54,7 @@ export function PlateFinder() {
   const inputRef = useRef<HTMLInputElement>(null);
   const firstRender = useRef(true);
   const inputId = useId();
+  const placeholder = useTypewriter(EXAMPLE_PLATES, !value && step.kind === "plate");
   const errId = useId();
 
   // Se o cliente volta à home com uma medida já escolhida, abre direto nas ofertas.
@@ -152,8 +154,8 @@ export function PlateFinder() {
           <li
             key={label}
             aria-current={i === current ? "step" : undefined}
-            className={`flex-1 border-t-4 pt-1.5 font-mono text-[0.68rem] uppercase tracking-[0.12em] ${
-              i <= current ? "border-signal text-paper" : "border-line-dark text-muted-dark"
+            className={`flex-1 border-t-[5px] pt-2 text-[0.72rem] font-semibold transition-colors duration-500 ${
+              i <= current ? "border-signal text-ink" : "border-paper-2 text-muted"
             }`}
           >
             <span className="sr-only">Etapa {i + 1}: </span>
@@ -164,7 +166,7 @@ export function PlateFinder() {
 
       {showPlate ? (
         <form onSubmit={submit} noValidate>
-          <h2 id="finder-title" className="mb-3 text-lg font-semibold text-paper">
+          <h2 id="finder-title" className="mb-3 font-display text-xl font-bold tracking-tight">
             Qual a placa do seu carro?
           </h2>
           <label htmlFor={inputId} className="sr-only">
@@ -186,30 +188,30 @@ export function PlateFinder() {
               autoCorrect="off"
               spellCheck={false}
               enterKeyHint="search"
-              placeholder="ABC1D23"
+              placeholder={placeholder}
               maxLength={8}
               aria-invalid={!!error}
               aria-describedby={`${errId} ${inputId}-hint`}
               className={`${plateTextClass} block w-full bg-transparent px-3 py-2 text-center text-[clamp(2.6rem,13vw,4.4rem)] leading-none text-ink placeholder:text-line focus:outline-none disabled:opacity-60`}
             />
           </MercosulPlate>
-          <p id={`${inputId}-hint`} className="mt-2 text-sm text-muted-dark">
+          <p id={`${inputId}-hint`} className="mt-2 text-sm text-muted">
             Vale placa Mercosul ou antiga. Usamos só para achar a medida do pneu.
           </p>
           <p
             id={errId}
             role="alert"
-            className="mt-2 min-h-[1.5rem] text-sm font-semibold text-signal"
+            className="mt-2 min-h-[1.5rem] text-sm font-semibold text-danger"
           >
             {error}
           </p>
 
           {step.kind === "loading" ? (
             <div className="mt-2 flex flex-wrap items-center gap-3">
-              <div className="h-3 flex-1 overflow-hidden rounded-sm bg-ink-3" aria-hidden>
+              <div className="h-3 flex-1 overflow-hidden rounded-full bg-paper-2" aria-hidden>
                 <div className="tread h-full w-full animate-tread bg-signal" />
               </div>
-              <button type="button" onClick={cancel} className="btn-ghost text-paper">
+              <button type="button" onClick={cancel} className="btn-ghost">
                 Cancelar
               </button>
             </div>
@@ -221,7 +223,7 @@ export function PlateFinder() {
               </button>
               <button
                 type="button"
-                className="btn text-paper underline decoration-signal underline-offset-4"
+                className="btn px-3 text-ink underline decoration-signal decoration-2 underline-offset-4"
                 onClick={() => setStep({ kind: "fallback", plate: null, reason: "unsure" })}
               >
                 Prefiro buscar sem placa
@@ -233,7 +235,12 @@ export function PlateFinder() {
 
       {step.kind === "confirm" ? (
         <Panel>
-          <h2 id="finder-title" ref={headingRef} tabIndex={-1} className="text-lg font-semibold">
+          <h2
+            id="finder-title"
+            ref={headingRef}
+            tabIndex={-1}
+            className="font-display text-xl font-bold tracking-tight"
+          >
             É este o seu carro?
           </h2>
           <PlateLine plate={step.plate} />
@@ -243,7 +250,7 @@ export function PlateFinder() {
               Sim, é esse
             </button>
             <button
-              className="btn-ghost text-paper"
+              className="btn-ghost"
               onClick={() => setStep({ kind: "fallback", plate: step.plate, reason: "not_mine" })}
             >
               Não é o meu
@@ -264,7 +271,12 @@ export function PlateFinder() {
 
       {step.kind === "fallback" ? (
         <Panel>
-          <h2 id="finder-title" ref={headingRef} tabIndex={-1} className="text-lg font-semibold">
+          <h2
+            id="finder-title"
+            ref={headingRef}
+            tabIndex={-1}
+            className="font-display text-xl font-bold tracking-tight"
+          >
             {step.reason === "not_found"
               ? "Não encontramos essa placa — dá para achar a medida de outro jeito."
               : step.reason === "error"
@@ -279,7 +291,7 @@ export function PlateFinder() {
             onSize={(size) => commit(step.plate, null, size)}
           />
           <button
-            className="btn mt-4 px-0 text-muted-dark underline underline-offset-4"
+            className="btn mt-4 px-0 text-muted underline underline-offset-4"
             onClick={restart}
           >
             Tentar outra placa
@@ -299,8 +311,42 @@ export function PlateFinder() {
   );
 }
 
+/**
+ * Placeholder que "digita" placas de exemplo enquanto o campo está vazio.
+ * Parado em ABC1D23 com prefers-reduced-motion.
+ */
+function useTypewriter(words: string[], active: boolean) {
+  const [text, setText] = useState(words[0]);
+  useEffect(() => {
+    if (!active || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let w = 0;
+    let i = words[0].length;
+    let dir = -1;
+    let hold = 18;
+    const t = setInterval(() => {
+      if (hold > 0) {
+        hold--;
+        return;
+      }
+      i += dir;
+      if (i <= 0) {
+        dir = 1;
+        w = (w + 1) % words.length;
+      }
+      if (i >= words[w].length) {
+        i = words[w].length;
+        dir = -1;
+        hold = 22;
+      }
+      setText(words[w].slice(0, Math.max(i, 0)) || "\u00a0");
+    }, 90);
+    return () => clearInterval(t);
+  }, [active, words]);
+  return active ? text : words[0];
+}
+
 function Panel({ children }: { children: React.ReactNode }) {
-  return <div className="animate-rise text-paper">{children}</div>;
+  return <div className="animate-rise">{children}</div>;
 }
 
 function PlateLine({ plate }: { plate: string | null }) {
@@ -314,14 +360,14 @@ function PlateLine({ plate }: { plate: string | null }) {
 
 function VehicleLine({ vehicle }: { vehicle: Vehicle }) {
   return (
-    <dl className="mt-4 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 border-l-4 border-signal pl-4">
-      <dt className="eyebrow self-center text-muted-dark">Marca</dt>
+    <dl className="mt-4 grid grid-cols-[auto_1fr] gap-x-5 gap-y-2 rounded-2xl bg-paper p-4">
+      <dt className="label self-center text-muted">Marca</dt>
       <dd className="font-semibold">{vehicle.marca}</dd>
-      <dt className="eyebrow self-center text-muted-dark">Modelo</dt>
+      <dt className="label self-center text-muted">Modelo</dt>
       <dd className="font-semibold">
         {vehicle.modelo} {vehicle.versao}
       </dd>
-      <dt className="eyebrow self-center text-muted-dark">Anos</dt>
+      <dt className="label self-center text-muted">Anos</dt>
       <dd className="num font-semibold">
         {vehicle.anos[0]}–{vehicle.anos[1]}
       </dd>
@@ -350,11 +396,16 @@ function SizeChoice({
   return (
     <Panel>
       <PlateLine plate={plate} />
-      <h2 id="finder-title" ref={headingRef} tabIndex={-1} className="mt-3 text-lg font-semibold">
+      <h2
+        id="finder-title"
+        ref={headingRef}
+        tabIndex={-1}
+        className="mt-4 font-display text-xl font-bold tracking-tight"
+      >
         O {vehicle.modelo} {vehicle.versao} saiu de fábrica com {vehicle.medidas.length} medidas.
         Qual é a do seu?
       </h2>
-      <p className="mt-1 text-sm text-muted-dark">
+      <p className="mt-1 text-sm text-muted">
         Depende da roda que veio no carro. Não dá para saber pela placa — e não vamos chutar.
       </p>
       <form
@@ -371,10 +422,10 @@ function SizeChoice({
             {vehicle.medidas.map((m) => (
               <label
                 key={m.medida}
-                className={`flex min-h-tap cursor-pointer items-center gap-3 rounded-md border-2 p-3 transition-colors ${
+                className={`flex min-h-tap cursor-pointer items-center gap-3 rounded-2xl border-2 p-4 transition-colors ${
                   picked === m.medida
-                    ? "border-signal bg-ink-3"
-                    : "border-line-dark hover:border-muted-dark"
+                    ? "border-ink bg-signal-soft"
+                    : "border-line bg-white hover:border-ink/40"
                 }`}
               >
                 <input
@@ -386,29 +437,29 @@ function SizeChoice({
                     setPicked(m.medida);
                     setErr(null);
                   }}
-                  className="h-5 w-5 accent-[rgb(var(--signal))]"
+                  className="h-5 w-5 accent-[rgb(var(--ink))]"
                 />
                 <span>
                   <span className="num block font-mono text-xl font-semibold">{m.medida}</span>
-                  {m.nota ? <span className="block text-sm text-muted-dark">{m.nota}</span> : null}
+                  {m.nota ? <span className="block text-sm text-muted">{m.nota}</span> : null}
                 </span>
               </label>
             ))}
           </div>
         </fieldset>
-        <p role="alert" className="mt-2 min-h-[1.25rem] text-sm font-semibold text-signal">
+        <p role="alert" className="mt-2 min-h-[1.25rem] text-sm font-semibold text-danger">
           {err}
         </p>
         <div className="mt-2 flex flex-wrap gap-3">
           <button type="submit" className="btn-signal">
             Ver pneus nessa medida
           </button>
-          <button type="button" className="btn-ghost text-paper" onClick={() => setGuideOpen(true)}>
+          <button type="button" className="btn-ghost" onClick={() => setGuideOpen(true)}>
             Como confiro no pneu?
           </button>
           <button
             type="button"
-            className="btn px-2 text-paper underline underline-offset-4"
+            className="btn px-2 text-ink underline underline-offset-4"
             onClick={onUnsure}
           >
             Não sei qual é
@@ -460,7 +511,7 @@ function FallbackTabs({
       <div
         role="tablist"
         aria-label="Formas de achar a medida"
-        className="flex gap-1 border-b border-line-dark"
+        className="flex gap-1 rounded-full bg-paper-2 p-1"
       >
         {tabs.map((t, i) => (
           <button
@@ -475,10 +526,8 @@ function FallbackTabs({
             tabIndex={tab === t.id ? 0 : -1}
             onClick={() => setTab(t.id)}
             onKeyDown={(e) => onKey(e, i)}
-            className={`min-h-tap flex-1 border-b-4 px-2 text-sm font-semibold sm:flex-none sm:px-4 ${
-              tab === t.id
-                ? "border-signal text-paper"
-                : "border-transparent text-muted-dark hover:text-paper"
+            className={`min-h-[40px] flex-1 rounded-full px-2 text-sm font-semibold transition-colors sm:px-4 ${
+              tab === t.id ? "bg-white text-ink shadow-sm" : "text-muted hover:text-ink"
             }`}
           >
             {t.label}
@@ -491,11 +540,11 @@ function FallbackTabs({
         aria-labelledby={`${base}-${tab}-tab`}
         className="pt-4"
       >
-        {tab === "manual" ? <ManualSearch onVehicle={onVehicle} dark /> : null}
-        {tab === "medida" ? <SizeSearch onSize={onSize} dark /> : null}
+        {tab === "manual" ? <ManualSearch onVehicle={onVehicle} /> : null}
+        {tab === "medida" ? <SizeSearch onSize={onSize} /> : null}
         {tab === "ajuda" ? (
           <div>
-            <p className="text-muted-dark">
+            <p className="text-muted">
               Um atendente confere a medida com você — pela placa, por foto do pneu ou pelo
               documento. Sem compromisso.
             </p>
@@ -528,11 +577,11 @@ function Offers({
   const list = productsForSize(size).slice(0, 3);
   return (
     <Panel>
-      <p className="eyebrow text-signal">{vehicle ? "Medida de fábrica" : "Medida escolhida"}</p>
+      <p className="eyebrow">{vehicle ? "Medida de fábrica" : "Medida escolhida"}</p>
       <h2 id="finder-title" ref={headingRef} tabIndex={-1} className="mt-1">
         <span className="num block font-mono text-4xl font-semibold sm:text-5xl">{size}</span>
         {vehicle ? (
-          <span className="mt-1 block text-base font-normal text-muted-dark">
+          <span className="mt-1 block text-base font-normal text-muted">
             para {vehicle.marca} {vehicle.modelo} {vehicle.versao}
           </span>
         ) : null}
@@ -546,7 +595,7 @@ function Offers({
           ))}
         </ul>
       ) : (
-        <div className="mt-5 rounded-md border border-line-dark p-4">
+        <div className="mt-5 rounded-2xl border border-line p-4">
           <p>Não temos essa medida no catálogo online agora. A loja consegue em geral em 24h.</p>
           <a
             href={waLink(`Olá! Procuro pneu ${size}. Vocês têm?`)}
@@ -562,7 +611,7 @@ function Offers({
         <Link href={`/pneus/${sizeToSlug(size)}`} className="btn-signal">
           Ver todas as opções em {size}
         </Link>
-        <button className="btn-ghost text-paper" onClick={onRestart}>
+        <button className="btn-ghost" onClick={onRestart}>
           Trocar carro
         </button>
       </div>

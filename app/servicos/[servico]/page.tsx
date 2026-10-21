@@ -44,7 +44,7 @@ export default async function ServicoPage({ params }: Props) {
                 <li key={w} className="flex gap-3">
                   <span
                     aria-hidden
-                    className="mt-2 h-2 w-2 shrink-0 bg-signal outline outline-1 outline-ink"
+                    className="mt-2 h-2 w-2 shrink-0 rounded-full bg-signal ring-2 ring-signal/30"
                   />
                   {w}
                 </li>
@@ -64,7 +64,7 @@ export default async function ServicoPage({ params }: Props) {
           </QA>
         </div>
         <aside className="grid content-start gap-4">
-          <div className="rounded-lg bg-ink p-5 text-paper">
+          <div className="rounded-2xl bg-ink p-5 text-white">
             <p className="font-semibold">Quer um orçamento de {s.name.toLowerCase()}?</p>
             <div className="mt-4 grid gap-2">
               <Link href={`/agendar?servico=${s.slug}`} className="btn-signal">
@@ -81,8 +81,8 @@ export default async function ServicoPage({ params }: Props) {
             </div>
           </div>
           {related.length ? (
-            <nav aria-label="Serviços relacionados" className="rounded-lg border border-line p-5">
-              <p className="eyebrow text-muted">Costuma ir junto</p>
+            <nav aria-label="Serviços relacionados" className="rounded-2xl border border-line p-5">
+              <p className="label text-muted">Costuma ir junto</p>
               <ul className="mt-2">
                 {related.map((r) => (
                   <li key={r!.slug}>
@@ -105,10 +105,10 @@ export default async function ServicoPage({ params }: Props) {
 
 function QA({ n, q, children }: { n: string; q: string; children: React.ReactNode }) {
   return (
-    <section className="grid gap-3 border-t-2 border-ink pt-4 sm:grid-cols-[10rem_1fr]">
+    <section className="grid gap-3 border-t border-line pt-6 sm:grid-cols-[10rem_1fr]">
       <h2 className="flex items-baseline gap-3">
         <span className="num font-mono text-sm text-muted">{n}</span>
-        <span className="h-display text-2xl">{q}</span>
+        <span className="font-display text-2xl font-bold tracking-tight">{q}</span>
       </h2>
       <div className="text-lg">{children}</div>
     </section>

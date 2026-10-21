@@ -87,8 +87,8 @@ export function ScheduleForm() {
           : ""}
       </p>
       {product ? (
-        <div className="rounded-lg border-l-4 border-signal bg-white p-4">
-          <p className="eyebrow text-muted">Pneu escolhido</p>
+        <div className="rounded-2xl bg-signal-soft p-5">
+          <p className="label text-muted">Pneu escolhido</p>
           <p className="mt-1 font-semibold">
             {product.marca} {product.linha} <span className="num font-mono">{product.medida}</span>
           </p>
@@ -191,7 +191,7 @@ export function ScheduleForm() {
           ].map(([v, l]) => (
             <label
               key={v}
-              className={`flex min-h-tap flex-1 cursor-pointer items-center justify-center rounded-md border-2 font-semibold ${periodo === v ? "border-ink bg-ink text-paper" : "border-line bg-white"}`}
+              className={`flex min-h-tap flex-1 cursor-pointer items-center justify-center rounded-xl border-2 font-semibold ${periodo === v ? "border-ink bg-ink text-white" : "border-line bg-white"}`}
             >
               <input
                 type="radio"

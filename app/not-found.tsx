@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function NotFound() {
   return (
     <div className="wrap py-20">
-      <p className="eyebrow text-muted">Erro 404</p>
+      <p className="label text-muted">Erro 404</p>
       <h1 className="h-display mt-2 text-5xl">Essa página não existe</h1>
       <p className="mt-4 max-w-prose text-muted">
         O endereço pode ter mudado. Escolha por onde seguir:

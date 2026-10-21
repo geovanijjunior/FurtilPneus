@@ -61,11 +61,11 @@ export function StoreSwitcher({
         {msg}
       </p>
       <fieldset className="mt-1">
-        <legend className="eyebrow mb-1 text-muted">Ou escolha</legend>
+        <legend className="label mb-1 text-muted">Ou escolha</legend>
         {stores.map((s) => (
           <label
             key={s.slug}
-            className="flex min-h-tap cursor-pointer items-center gap-3 rounded-md px-2 hover:bg-paper-2"
+            className="flex min-h-tap cursor-pointer items-center gap-3 rounded-xl px-2 hover:bg-paper-2"
           >
             <input
               type="radio"
@@ -89,7 +89,7 @@ export function StoreSwitcher({
 
   if (inline) {
     return (
-      <div className={`rounded-lg bg-paper p-3 text-ink ${className}`}>
+      <div className={`rounded-2xl bg-paper p-4 text-ink ${className}`}>
         <p className="mb-2 text-sm">
           Sua loja: <strong>{store.label}</strong>
         </p>
@@ -104,11 +104,11 @@ export function StoreSwitcher({
         aria-expanded={open}
         aria-controls={panelId}
         onClick={() => setOpen((o) => !o)}
-        className="flex min-h-tap items-center gap-2 rounded-md px-3 text-sm hover:bg-ink-3"
+        className="flex min-h-tap items-center gap-2 rounded-full border border-line bg-white px-3.5 text-sm transition-colors hover:border-ink/40"
       >
         <Pin />
         <span className="text-left leading-tight">
-          <span className="block text-[0.68rem] text-muted-dark">
+          <span className="block text-[0.68rem] text-muted">
             {storeSource === "geo" ? "Loja mais perto" : "Sua loja"}
           </span>
           <span className="block font-semibold">{store.label}</span>
@@ -120,7 +120,7 @@ export function StoreSwitcher({
       <div
         id={panelId}
         hidden={!open}
-        className="absolute right-0 top-full z-50 mt-2 w-72 rounded-lg border border-line bg-paper p-3 text-ink shadow-xl"
+        className="absolute right-0 top-full z-50 mt-2 w-72 rounded-2xl border border-line bg-white p-3 text-ink shadow-[0_24px_48px_-20px_rgb(var(--ink)/0.35)]"
       >
         {panel}
       </div>

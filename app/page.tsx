@@ -1,157 +1,196 @@
 import Link from "next/link";
+import { HeroTire } from "@/components/HeroTire";
 import { Laudo } from "@/components/Laudo";
+import { RimPrices } from "@/components/RimPrices";
 import { StoreCard } from "@/components/StoreCard";
 import { Arrow, PlateFinder } from "@/components/finder/PlateFinder";
 import { stores } from "@/config/lojas";
 import { services } from "@/config/servicos";
 import { commitments, terms } from "@/config/site";
-import { installment, money } from "@/lib/format";
+import { allBrands } from "@/lib/data";
+import { money } from "@/lib/format";
 
-// Tabela "a partir de" publicada hoje no site atual (preço à vista, na troca do usado).
-// TODO: confirmar com o cliente se os valores continuam valendo.
-const fromPrices = [
-  { rim: "13", price: 189.9 },
-  { rim: "14", price: 199.9 },
-  { rim: "15", price: 239.9 },
-  { rim: "16", price: 269.9 },
-];
+const perks = [
+  { big: `${terms.tireWarrantyYears} anos`, small: "de garantia em pneus novos", icon: "shield" },
+  {
+    big: `${terms.serviceWarrantyMonths} meses`,
+    small: "de garantia em peças e serviços",
+    icon: "wrench",
+  },
+  { big: `${terms.installmentsMax}x`, small: "sem juros no cartão", icon: "card" },
+  { big: "Laudo", small: "com foto antes de qualquer troca", icon: "camera" },
+] as const;
 
 export default function Home() {
   return (
     <>
       {/* Hero: a placa é a primeira coisa que o cliente toca. */}
-      <section className="relative overflow-hidden bg-ink text-paper">
-        <div className="wrap grid gap-7 pb-14 pt-8 lg:grid-cols-[1.05fr_1fr] lg:gap-16 lg:pb-20 lg:pt-16">
-          <div className="lg:pt-6">
-            <p className="eyebrow text-signal">Guarulhos · Tremembé · Vila Formosa</p>
-            <h1 className="h-display mt-4 text-[clamp(2.5rem,9.5vw,5.6rem)]">
-              O pneu certo
-              <br />
-              pela placa.
-              <br />
-              <span className="text-signal">O preço certo</span>
-              <br />
-              na etiqueta.
+      <section className="relative overflow-hidden">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-[0.5] [background-image:radial-gradient(rgb(var(--line))_1px,transparent_1px)] [background-size:22px_22px] [mask-image:linear-gradient(180deg,#000,transparent_85%)]"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-40 -top-40 h-[34rem] w-[34rem] rounded-full bg-signal/25 blur-3xl"
+        />
+        <div className="wrap relative grid gap-10 pb-16 pt-8 sm:pt-12 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-6 lg:pb-24 lg:pt-16">
+          <div className="min-w-0">
+            <p className="eyebrow">Guarulhos · Tremembé · Vila Formosa</p>
+            <h1 className="h-display mt-4 text-[clamp(2.4rem,7.6vw,4.6rem)]">
+              O pneu certo <span className="mark">pela placa</span>.
+              <span className="block text-muted">O preço certo na etiqueta.</span>
             </h1>
-            <p className="mt-6 hidden max-w-md text-lg text-muted-dark sm:block">
-              Digite a placa, confirme o carro e veja só os pneus que servem nele — com o valor à
-              vista em destaque e a condição escrita do lado.
+            <p className="mt-5 hidden max-w-lg text-lg text-muted sm:block">
+              Digite a placa, confirme o carro e veja só os pneus que servem nele, com o valor à
+              vista em destaque.
             </p>
+            <div className="card mt-7 p-5 shadow-[0_30px_60px_-35px_rgb(var(--ink)/0.45)] sm:p-7 lg:max-w-xl">
+              <PlateFinder />
+            </div>
           </div>
-          <div className="rounded-xl border border-line-dark bg-ink-2 p-5 sm:p-7">
-            <PlateFinder />
+          <div className="relative hidden lg:block">
+            <HeroTire className="mx-auto w-full max-w-[30rem]" />
+            <Floating
+              className="left-0 top-[12%]"
+              title={`${terms.tireWarrantyYears} anos`}
+              body="de garantia"
+            />
+            <Floating
+              className="bottom-[14%] right-0"
+              title={`${terms.installmentsMax}x sem juros`}
+              body="no cartão"
+              dark
+            />
           </div>
         </div>
-        <div className="border-t border-line-dark">
-          <ul className="mx-auto grid max-w-page grid-cols-2 gap-px bg-line-dark lg:grid-cols-4">
-            {[
-              [`${terms.tireWarrantyYears} anos`, "de garantia em pneus novos"],
-              [`${terms.serviceWarrantyMonths} meses`, "de garantia em peças e serviços"],
-              [`${terms.installmentsMax}x`, "sem juros no cartão"],
-              ["Diagnóstico", "antes de qualquer orçamento"],
-            ].map(([big, small]) => (
-              <li key={big} className="bg-ink px-4 py-5 sm:px-6">
-                <span className="h-display block text-2xl text-signal sm:text-3xl">{big}</span>
-                <span className="mt-1 block text-sm text-muted-dark">{small}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+      </section>
+
+      {/* Garantias */}
+      <section aria-label="Garantias" className="wrap -mt-6 lg:-mt-10">
+        <ul className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+          {perks.map((p) => (
+            <li key={p.big} className="card lift flex flex-col gap-3 p-5">
+              <span className="grid h-10 w-10 place-items-center rounded-xl bg-signal">
+                <PerkIcon name={p.icon} />
+              </span>
+              <span>
+                <span className="block font-display text-2xl font-extrabold tracking-tight">
+                  {p.big}
+                </span>
+                <span className="mt-0.5 block text-sm text-muted">{p.small}</span>
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {/* Marcas */}
+      <section aria-label="Marcas no catálogo" className="marquee mt-14 overflow-hidden py-2">
+        <ul className="flex w-max gap-12 pr-12">
+          {[...allBrands, ...allBrands, ...allBrands, ...allBrands].map((b, i) => (
+            <li
+              key={i}
+              aria-hidden={i >= allBrands.length}
+              className="font-display text-2xl font-extrabold uppercase italic tracking-tight text-ink/25"
+            >
+              {b}
+            </li>
+          ))}
+        </ul>
       </section>
 
       {/* Credibilidade: mostrar o laudo em vez de prometer honestidade. */}
       <section
         aria-labelledby="como"
-        className="wrap grid gap-12 py-16 lg:grid-cols-2 lg:items-center lg:py-24"
+        className="wrap grid gap-12 py-20 lg:grid-cols-2 lg:items-center lg:py-28"
       >
         <div>
-          <p className="eyebrow text-signal-deep">Como trabalhamos</p>
-          <h2 id="como" className="h-display mt-3 text-[clamp(2.3rem,7vw,3.8rem)]">
-            Você vê o defeito antes de pagar por ele.
+          <p className="eyebrow">Como trabalhamos</p>
+          <h2 id="como" className="h-display mt-3 text-[clamp(2rem,5vw,3.2rem)]">
+            Você vê o defeito <span className="mark">antes</span> de pagar por ele.
           </h2>
-          <ol className="mt-8 grid gap-6">
-            {commitments.map((c, i) => (
-              <li key={c.id} className="grid grid-cols-[2.5rem_1fr] gap-3">
-                <span className="num font-mono text-sm font-semibold text-muted">0{i + 1}</span>
+          <ul className="mt-8 grid gap-5">
+            {commitments.map((c) => (
+              <li key={c.id} className="flex gap-4">
+                <span
+                  aria-hidden
+                  className="mt-1 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-ink text-xs text-signal"
+                >
+                  ✓
+                </span>
                 <div>
                   <h3 className="font-semibold">{c.title}</h3>
                   <p className="mt-1 text-muted">{c.body}</p>
                 </div>
               </li>
             ))}
-          </ol>
-          <Link href="/como-trabalhamos" className="btn-ink mt-8">
+          </ul>
+          <Link href="/como-trabalhamos" className="btn-ghost mt-8">
             Ver o processo completo <Arrow />
           </Link>
         </div>
-        <Laudo />
+        <div>
+          <p className="mb-3 text-sm text-muted">Experimente: marque o que você aprovaria.</p>
+          <Laudo />
+        </div>
       </section>
 
       {/* Preços de referência por aro */}
-      <section aria-labelledby="precos" className="border-y border-line bg-paper-2">
-        <div className="wrap py-16 lg:py-20">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <div>
-              <p className="eyebrow text-signal-deep">Pneus novos</p>
-              <h2 id="precos" className="h-display mt-3 text-[clamp(2.3rem,7vw,3.8rem)]">
-                Preço por aro, sem surpresa
-              </h2>
-            </div>
-            <Link href="/pneus" className="btn-ghost">
-              Ver catálogo completo
-            </Link>
+      <section aria-labelledby="precos" className="bg-white">
+        <div className="wrap py-20 lg:py-24">
+          <div className="max-w-2xl">
+            <p className="eyebrow">Pneus novos</p>
+            <h2 id="precos" className="h-display mt-3 text-[clamp(2rem,5vw,3.2rem)]">
+              Preço por aro, sem asterisco.
+            </h2>
           </div>
-          <ul className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {fromPrices.map((p) => (
-              <li key={p.rim} className="rounded-lg border border-line bg-white p-5">
-                <p className="flex items-baseline gap-2">
-                  <span className="eyebrow text-muted">Aro</span>
-                  <span className="h-display text-5xl">{p.rim}</span>
-                </p>
-                <p className="mt-4 text-xs text-muted">a partir de, à vista</p>
-                <p className="num font-display text-4xl font-extrabold tracking-tight">
-                  {money(p.price)}
-                </p>
-                <p className="num mt-1 text-sm text-muted">
-                  ou {terms.installmentsMax}x de {installment(p.price, terms.installmentsMax)}
-                </p>
-                <p className="mt-3 rounded-sm bg-paper-2 px-2 py-1 text-xs font-medium">
-                  Na troca do seu pneu usado. Marca e medida conforme estoque da loja.
-                </p>
-              </li>
-            ))}
-          </ul>
+          <div className="mt-10">
+            <RimPrices />
+          </div>
         </div>
       </section>
 
       {/* Serviços */}
-      <section aria-labelledby="servicos" className="wrap py-16 lg:py-24">
-        <p className="eyebrow text-signal-deep">Serviços</p>
-        <h2 id="servicos" className="h-display mt-3 text-[clamp(2.3rem,7vw,3.8rem)]">
-          O que é, quando fazer,
-          <br className="hidden sm:block" /> quanto custa, quanto demora.
-        </h2>
-        <ul className="mt-10 grid border-l border-t border-line sm:grid-cols-2 lg:grid-cols-3">
-          {services.map((s) => (
-            <li key={s.slug} className="border-b border-r border-line">
+      <section aria-labelledby="servicos" className="wrap py-20 lg:py-28">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div className="max-w-2xl">
+            <p className="eyebrow">Serviços</p>
+            <h2 id="servicos" className="h-display mt-3 text-[clamp(2rem,5vw,3.2rem)]">
+              O que é, quando fazer, quanto custa e quanto demora.
+            </h2>
+          </div>
+          <Link href="/servicos" className="btn-ghost">
+            Todos os serviços <Arrow />
+          </Link>
+        </div>
+        <ul className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {services.slice(0, 6).map((s) => (
+            <li key={s.slug}>
               <Link
                 href={`/servicos/${s.slug}`}
-                className="group flex h-full flex-col p-5 hover:bg-white sm:p-6"
+                className="card lift group flex h-full flex-col p-6"
               >
-                <h3 className="text-xl font-semibold group-hover:underline">{s.name}</h3>
+                <div className="flex items-start justify-between gap-3">
+                  <h3 className="font-display text-xl font-bold tracking-tight">{s.name}</h3>
+                  <span
+                    aria-hidden
+                    className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-paper-2 transition-colors group-hover:bg-signal"
+                  >
+                    <Arrow />
+                  </span>
+                </div>
                 <p className="mt-2 text-sm text-muted">{s.short}</p>
-                <dl className="mt-auto grid grid-cols-2 gap-2 pt-5 text-sm">
-                  <div>
-                    <dt className="eyebrow text-muted">Custa</dt>
+                <dl className="mt-auto flex flex-wrap gap-2 pt-5 text-xs">
+                  <div className="rounded-full bg-paper px-3 py-1">
+                    <dt className="sr-only">Custa</dt>
                     <dd className="num font-semibold">
                       {s.price.from ? `a partir de ${money(s.price.from)}` : "sob orçamento"}
                     </dd>
                   </div>
-                  <div>
-                    <dt className="eyebrow text-muted">Demora</dt>
-                    <dd className="font-semibold">
-                      {s.duration.replace(/^Cerca de /, "~").replace(/\.$/, "")}
-                    </dd>
+                  <div className="rounded-full bg-paper px-3 py-1">
+                    <dt className="sr-only">Demora</dt>
+                    <dd>{s.duration.replace(/^Cerca de /, "~").replace(/\.$/, "")}</dd>
                   </div>
                 </dl>
               </Link>
@@ -161,11 +200,11 @@ export default function Home() {
       </section>
 
       {/* Lojas */}
-      <section aria-labelledby="lojas" className="bg-paper-2">
-        <div className="wrap py-16 lg:py-20">
-          <p className="eyebrow text-signal-deep">Lojas</p>
-          <h2 id="lojas" className="h-display mt-3 text-[clamp(2.3rem,7vw,3.8rem)]">
-            Três endereços, um padrão
+      <section aria-labelledby="lojas" className="bg-white">
+        <div className="wrap py-20 lg:py-24">
+          <p className="eyebrow">Lojas</p>
+          <h2 id="lojas" className="h-display mt-3 text-[clamp(2rem,5vw,3.2rem)]">
+            Três endereços, o mesmo processo.
           </h2>
           <ul className="mt-10 grid gap-3 md:grid-cols-3">
             {stores.map((s) => (
@@ -177,16 +216,92 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-signal text-ink">
-        <div className="wrap flex flex-col items-start gap-6 py-14 md:flex-row md:items-center md:justify-between">
-          <h2 className="h-display text-[clamp(2.2rem,6vw,3.4rem)]">
-            Agende e chegue com tudo combinado.
-          </h2>
-          <Link href="/agendar" className="btn-ink shrink-0 text-base">
-            Agendar horário <Arrow />
-          </Link>
+      <section className="wrap py-16">
+        <div className="relative overflow-hidden rounded-[2rem] bg-ink px-6 py-12 text-white sm:px-12 sm:py-16">
+          <div
+            aria-hidden
+            className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-signal/30 blur-3xl"
+          />
+          <div className="relative flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between">
+            <div>
+              <h2 className="h-display text-[clamp(1.9rem,4.5vw,3rem)]">
+                Agende e chegue com <span className="text-signal">tudo combinado</span>.
+              </h2>
+              <p className="mt-3 max-w-md text-muted-dark">
+                Escolha loja, dia e período. A confirmação chega no WhatsApp.
+              </p>
+            </div>
+            <Link href="/agendar" className="btn-signal shrink-0 text-base">
+              Agendar horário <Arrow />
+            </Link>
+          </div>
         </div>
       </section>
     </>
   );
+}
+
+function Floating({
+  className,
+  title,
+  body,
+  dark,
+}: {
+  className: string;
+  title: string;
+  body: string;
+  dark?: boolean;
+}) {
+  return (
+    <div
+      className={`absolute rounded-2xl px-4 py-3 shadow-[0_20px_40px_-20px_rgb(var(--ink)/0.5)] ${
+        dark ? "bg-ink text-white" : "bg-white text-ink"
+      } ${className}`}
+    >
+      <p className="font-display text-xl font-extrabold leading-tight tracking-tight">{title}</p>
+      <p className={`text-xs ${dark ? "text-muted-dark" : "text-muted"}`}>{body}</p>
+    </div>
+  );
+}
+
+function PerkIcon({ name }: { name: (typeof perks)[number]["icon"] }) {
+  const common = {
+    viewBox: "0 0 24 24",
+    className: "h-5 w-5",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 2,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+    "aria-hidden": true,
+  };
+  switch (name) {
+    case "shield":
+      return (
+        <svg {...common}>
+          <path d="M12 3 4 6v6c0 4.5 3.4 8.2 8 9 4.6-.8 8-4.5 8-9V6z" />
+          <path d="m9 12 2 2 4-4" />
+        </svg>
+      );
+    case "wrench":
+      return (
+        <svg {...common}>
+          <path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z" />
+        </svg>
+      );
+    case "card":
+      return (
+        <svg {...common}>
+          <rect x="3" y="5" width="18" height="14" rx="2" />
+          <path d="M3 10h18M7 15h4" />
+        </svg>
+      );
+    case "camera":
+      return (
+        <svg {...common}>
+          <path d="M4 8h3l2-3h6l2 3h3v11H4z" />
+          <circle cx="12" cy="13" r="3.5" />
+        </svg>
+      );
+  }
 }

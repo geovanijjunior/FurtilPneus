@@ -90,7 +90,7 @@ export default async function LojaPage({ params }: Props) {
       <PageHead eyebrow={s.city} title={`Loja ${s.label}`} />
       <div className="wrap grid gap-10 py-10 lg:grid-cols-[1fr_22rem]">
         <div className="grid content-start gap-6">
-          <div className="overflow-hidden rounded-lg border border-line bg-paper-2">
+          <div className="overflow-hidden rounded-2xl border border-line bg-paper-2">
             <iframe
               title={`Mapa da loja ${s.label}`}
               src={`https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${s.geo.lat},${s.geo.lng}`}
@@ -106,11 +106,8 @@ export default async function LojaPage({ params }: Props) {
           {reviews ? <Reviews data={reviews} /> : null}
         </div>
         <aside className="grid content-start gap-4">
-          <section
-            aria-labelledby="endereco"
-            className="rounded-lg border border-line bg-white p-5"
-          >
-            <h2 id="endereco" className="eyebrow text-muted">
+          <section aria-labelledby="endereco" className="card p-5">
+            <h2 id="endereco" className="label text-muted">
               Endereço
             </h2>
             <address className="mt-2 not-italic">
@@ -135,16 +132,16 @@ export default async function LojaPage({ params }: Props) {
               Como chegar
             </a>
           </section>
-          <section aria-labelledby="horario" className="rounded-lg border border-line bg-white p-5">
-            <h2 id="horario" className="eyebrow text-muted">
+          <section aria-labelledby="horario" className="card p-5">
+            <h2 id="horario" className="label text-muted">
               Horário {!s.confirmed.hours ? <Unconfirmed /> : null}
             </h2>
             <div className="mt-2">
               <HoursTable store={s} />
             </div>
           </section>
-          <section aria-labelledby="contato" className="rounded-lg bg-ink p-5 text-paper">
-            <h2 id="contato" className="eyebrow text-signal">
+          <section aria-labelledby="contato" className="rounded-2xl bg-ink p-5 text-white">
+            <h2 id="contato" className="label text-signal">
               Contato
             </h2>
             <a
@@ -178,7 +175,7 @@ function Reviews({ data }: { data: PlaceReviews }) {
   return (
     <section aria-labelledby="avaliacoes">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <h2 id="avaliacoes" className="h-display text-3xl">
+        <h2 id="avaliacoes" className="h-display text-2xl">
           Avaliações no Google
         </h2>
         <p className="num text-sm">
@@ -187,7 +184,7 @@ function Reviews({ data }: { data: PlaceReviews }) {
       </div>
       <ul className="mt-4 grid gap-3">
         {data.reviews.map((r) => (
-          <li key={r.url} className="rounded-lg border border-line bg-white p-4">
+          <li key={r.url} className="card p-4">
             <p className="flex flex-wrap justify-between gap-2 text-sm">
               <strong>{r.author}</strong>
               <span className="text-muted">

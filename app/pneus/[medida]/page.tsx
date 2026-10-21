@@ -66,10 +66,7 @@ export default async function MedidaPage({ params }: Props) {
       </PageHead>
       <div className="wrap py-10">
         {cars.length ? (
-          <section
-            aria-labelledby="carros"
-            className="mb-10 rounded-lg border border-line bg-white p-5"
-          >
+          <section aria-labelledby="carros" className="card mb-10 p-5">
             <h2 id="carros" className="font-semibold">
               Saem de fábrica com {size}
             </h2>

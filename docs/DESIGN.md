@@ -1,5 +1,23 @@
 # Furtil Pneus — plano de design
 
+## Revisão v2 — clean e interativa
+
+A primeira versão era brutalista: caixa alta condensada, faixas pretas e cantos retos. A v2 mantém a identidade (preto + amarelo `#FFCC00`, placa Mercosul como assinatura) e muda o tratamento:
+
+- **Base clara** (`#F7F7F5` e cards brancos). O preto ficou para botões primários, o rodapé e um bloco de CTA. O amarelo aparece como preenchimento: marca-texto em palavras-chave, botões e chips selecionados.
+- **Tipografia em caixa normal**: Archivo 800 com tracking −0,025em nos títulos; caixa alta itálica só no logo e na faixa de marcas.
+- **Formas**: cards com raio de 16px, botões e chips em pílula, sombras longas e suaves só no hover.
+- **Interações**:
+  - pneu do hero que gira com a rolagem (CSS `animation-timeline: scroll()`) e grava no flanco a medida que o cliente encontrou;
+  - placeholder da placa que "digita" exemplos;
+  - laudo interativo em que o visitante aprova itens e o total muda;
+  - seletor de aro com o preço em destaque;
+  - filtros do catálogo em chips;
+  - faixa de marcas em loop (pausa no hover);
+  - cards que sobem no hover.
+
+  Tudo respeita `prefers-reduced-motion`.
+
 ## O problema que o design resolve
 
 A Furtil vende pneu barato com garantia longa, mas o que trava a venda é a **confiança**. O Reclame Aqui marca a empresa como "Não recomendada" e as queixas se repetem: troca de peça sem necessidade e serviço mal feito. O site atual promete "honestidade", "transparência" e "referência no mercado", e mostra depoimentos que ninguém consegue conferir.
@@ -18,10 +36,11 @@ O site atual usa preto e o amarelo `#FFCC00`, que é o "LOGO-FURTIL-amarela" e a
 |---|---|---|---|
 | `ink` | `#0E0E0E` | fundo escuro, texto principal | 17,4:1 sobre `paper` |
 | `ink-2` / `ink-3` | `#1C1C1B` / `#2C2C2A` | superfícies e realces sobre ink | — |
-| `paper` | `#F5F3EE` | fundo claro, "papel de laudo" (o tom quente evita o branco de template) | — |
-| `paper-2` | `#E9E6DE` | faixas e chips sobre paper | — |
-| `line` / `line-dark` | `#CFCAC0` / `#40403C` | divisórias decorativas | — |
-| `muted` | `#54534E` | texto secundário sobre claro | 6,9:1 (paper) · 6,2:1 (paper-2) |
+| `paper` | `#F7F7F5` | fundo da página, quase branco | — |
+| `paper-2` | `#EEEEEA` | chips, controles segmentados | — |
+| `signal-soft` | `#FFF4CC` | destaque suave (condição de troca, item selecionado) | ink 17:1 |
+| `line` / `line-dark` | `#E2E2DD` / `#40403C` | bordas de card | — |
+| `muted` | `#5C5C56` | texto secundário sobre claro | 6,3:1 (paper) · 6,9:1 (branco) |
 | `muted-dark` | `#B0ADA4` | texto secundário sobre escuro | 8,6:1 (ink) · 7,6:1 (ink-2) |
 | `signal` | `#FFCC00` | amarelo Furtil: preenchimento, texto **só sobre escuro** | 12,8:1 sobre ink |
 | `signal-deep` | `#7A5C00` | eyebrows amarelos sobre claro (o `#FFCC00` sobre paper dá 1,4:1) | 5,6:1 |
@@ -35,7 +54,7 @@ O `tailwind.config.ts` **substitui** a paleta inteira. Nenhuma cor default do Ta
 
 | Papel | Família | Por quê |
 |---|---|---|
-| Display | **Archivo**, eixo `wdth` em 75 (62 na placa), peso 800, caixa alta, tracking −0,01em | Grotesca condensada de origem industrial. Com o eixo de largura ela vira a "letra de placa" (a Mercosul usa FE-Schrift, condensada e pesada) sem carregar uma segunda fonte. |
+| Display | **Archivo** 800, caixa normal, tracking −0,025em (eixo `wdth` 62 só na placa) | Grotesca condensada de origem industrial. Com o eixo de largura ela vira a "letra de placa" (a Mercosul usa FE-Schrift, condensada e pesada) sem carregar uma segunda fonte. |
 | Texto | **IBM Plex Sans** 400–700 | Desenhada para documentação técnica e com leitura de manual. Combina com a ideia de laudo melhor que uma Inter genérica. |
 | Utilitária | **IBM Plex Mono** 400–600 | Medidas de pneu (`205/55 R16 91V`), números de OS e eyebrows. Os dígitos tabulares alinham as medidas. |
 

@@ -24,7 +24,7 @@ export default function ServicosPage() {
             <li key={s.slug}>
               <Link
                 href={`/servicos/${s.slug}`}
-                className="group grid h-full gap-3 rounded-lg border border-line bg-white p-5 hover:border-ink sm:grid-cols-[1fr_auto]"
+                className="card lift group grid h-full gap-3 p-5 sm:grid-cols-[1fr_auto]"
               >
                 <div>
                   <h2 className="text-xl font-semibold group-hover:underline">{s.name}</h2>

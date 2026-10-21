@@ -42,7 +42,7 @@ export default function ComoTrabalhamosPage() {
               key={t}
               className="grid grid-cols-[3rem_1fr] gap-3 border-l-2 border-ink pb-8 pl-5 last:border-transparent last:pb-0"
             >
-              <span className="-ml-[2.15rem] flex h-9 w-9 items-center justify-center rounded-full bg-signal font-mono text-sm font-semibold ring-4 ring-paper">
+              <span className="-ml-[2.15rem] flex h-9 w-9 items-center justify-center rounded-full bg-signal font-mono text-sm font-semibold text-ink ring-4 ring-paper">
                 {i + 1}
               </span>
               <div className="-ml-8">
@@ -56,26 +56,26 @@ export default function ComoTrabalhamosPage() {
           <Laudo />
         </div>
       </div>
-      <section aria-labelledby="compromissos" className="bg-ink text-paper">
-        <div className="wrap py-14">
-          <h2 id="compromissos" className="h-display text-[clamp(2.2rem,6vw,3.4rem)]">
+      <section aria-labelledby="compromissos" className="wrap pb-16">
+        <div className="rounded-[2rem] bg-ink px-6 py-12 text-white sm:px-12 sm:py-14">
+          <h2 id="compromissos" className="h-display text-[clamp(1.9rem,5vw,3rem)]">
             Compromissos que você pode cobrar
           </h2>
-          <ul className="mt-8 grid gap-px bg-line-dark sm:grid-cols-2">
+          <ul className="mt-8 grid gap-3 sm:grid-cols-2">
             {commitments.map((c) => (
-              <li key={c.id} className="bg-ink p-5 sm:p-6">
+              <li key={c.id} className="rounded-2xl bg-ink-2 p-5 sm:p-6">
                 <h3 className="text-lg font-semibold text-signal">{c.title}</h3>
                 <p className="mt-2 text-muted-dark">{c.body}</p>
               </li>
             ))}
-            <li className="bg-ink p-5 sm:p-6">
+            <li className="rounded-2xl bg-ink-2 p-5 sm:p-6">
               <h3 className="text-lg font-semibold text-signal">Garantia por escrito</h3>
               <p className="mt-2 text-muted-dark">
                 {terms.tireWarrantyYears} anos em pneus novos e {terms.serviceWarrantyMonths} meses
                 em peças e serviços, descritos na nota.
               </p>
             </li>
-            <li className="bg-ink p-5 sm:p-6">
+            <li className="rounded-2xl bg-ink-2 p-5 sm:p-6">
               <h3 className="text-lg font-semibold text-signal">Algo deu errado?</h3>
               <p className="mt-2 text-muted-dark">
                 Fale direto com a gerência da loja pelo WhatsApp. Resposta em até 1 dia útil.

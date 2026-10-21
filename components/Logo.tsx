@@ -1,10 +1,12 @@
 // Marca provisória em tipografia. TODO: substituir pelo logo oficial em SVG
 // (o site atual só tem PNG/JPG — pedir o vetor ao cliente).
-export function Logo({ className = "" }: { className?: string }) {
+export function Logo({ className = "", invert = false }: { className?: string; invert?: boolean }) {
   return (
-    <span className={`inline-flex items-stretch leading-none ${className}`}>
-      <span className="h-display bg-signal px-1.5 pb-0.5 pt-1 text-[1.45rem] text-ink">Furtil</span>
-      <span className="h-display px-1.5 pb-0.5 pt-1 text-[1.45rem] text-current">Pneus</span>
+    <span
+      className={`inline-flex items-center gap-1.5 font-display text-[1.35rem] font-black uppercase italic leading-none tracking-[-0.03em] ${className}`}
+    >
+      <span className="rounded-md bg-signal px-1.5 py-1 text-ink">Furtil</span>
+      <span className={invert ? "text-white" : "text-ink"}>Pneus</span>
     </span>
   );
 }

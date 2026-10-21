@@ -20,6 +20,7 @@ const config: Config = {
       muted: token("muted"),
       "muted-dark": token("muted-dark"),
       signal: token("signal"),
+      "signal-soft": token("signal-soft"),
       "signal-deep": token("signal-deep"),
       mercosul: token("mercosul"),
       ok: token("ok"),
@@ -37,6 +38,7 @@ const config: Config = {
       minHeight: { tap: "44px" },
       minWidth: { tap: "44px" },
       borderRadius: { plate: "0.6rem" },
+      backdropBlur: { xs: "2px" },
       keyframes: {
         rise: {
           from: { opacity: "0", transform: "translateY(8px)" },

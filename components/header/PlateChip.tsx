@@ -17,7 +17,7 @@ export function PlateChip() {
   return (
     <Link
       href={`/pneus/${sizeToSlug(selection.size)}`}
-      className="flex min-h-tap items-center gap-2 rounded-md px-1.5 hover:bg-ink-3"
+      className="flex min-h-tap items-center gap-2 rounded-full px-1.5 transition-colors hover:bg-paper-2"
       aria-label={`Seu carro: ${selection.plate ? `placa ${displayPlate(selection.plate)}, ` : ""}${label ? `${label}, ` : ""}medida ${selection.size}. Ver pneus.`}
     >
       {selection.plate ? (
@@ -28,9 +28,9 @@ export function PlateChip() {
         </MercosulPlate>
       ) : null}
       <span className="flex flex-col text-left leading-tight">
-        {label ? <span className="hidden text-xs text-muted-dark sm:block">{label}</span> : null}
+        {label ? <span className="hidden text-xs text-muted sm:block">{label}</span> : null}
         <span
-          className={`num font-mono text-sm font-semibold text-signal ${selection.plate ? "hidden sm:block" : ""}`}
+          className={`num font-mono text-sm font-semibold text-ink ${selection.plate ? "hidden sm:block" : ""}`}
         >
           {selection.size}
         </span>

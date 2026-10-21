@@ -1,85 +1,146 @@
+"use client";
+
+import { useState } from "react";
+import { money } from "@/lib/format";
+
 /**
- * Amostra de laudo/ordem de serviço — mostra, em vez de prometer, como o
- * cliente recebe o diagnóstico: item, medida encontrada, limite e decisão.
+ * Laudo interativo de exemplo: o visitante aprova item por item e vê o total
+ * mudar — é a demonstração prática do "nada é trocado sem sua autorização".
  */
 const rows = [
-  { item: "Pneu dianteiro esq.", found: "Sulco 2,1 mm", limit: "mín. 1,6 mm", state: "atencao" },
-  { item: "Pastilha dianteira", found: "3,0 mm", limit: "mín. 2,0 mm", state: "ok" },
-  { item: "Amortecedor tras. dir.", found: "Vazamento", limit: "—", state: "trocar" },
-  { item: "Fluido de freio", found: "Umidade 1%", limit: "máx. 3%", state: "ok" },
+  {
+    id: "pneu",
+    item: "Pneu dianteiro esquerdo",
+    found: "Sulco 1,4 mm",
+    limit: "mín. 1,6 mm",
+    state: "trocar",
+    price: 199.9,
+    proof: "Foto do indicador TWI rente à banda de rodagem, enviada no WhatsApp às 9h12.",
+  },
+  {
+    id: "amortecedor",
+    item: "Amortecedor traseiro (par)",
+    found: "Vazamento",
+    limit: "sem vazamento",
+    state: "trocar",
+    price: 199.9,
+    proof: "Vídeo de 12 s mostrando óleo escorrendo no corpo do amortecedor direito.",
+  },
+  {
+    id: "alinhamento",
+    item: "Alinhamento",
+    found: "Conv. +0,4°",
+    limit: "±0,2°",
+    state: "atencao",
+    price: 89.9,
+    proof: "Folha impressa do equipamento com o antes e o depois.",
+  },
+  {
+    id: "pastilha",
+    item: "Pastilha dianteira",
+    found: "6,0 mm",
+    limit: "mín. 2,0 mm",
+    state: "ok",
+    price: 0,
+    proof: null,
+  },
 ] as const;
 
 const stateLabel = { ok: "OK", atencao: "Atenção", trocar: "Trocar" } as const;
 const stateClass = {
   ok: "bg-paper-2 text-ok",
-  atencao: "bg-signal text-ink",
-  trocar: "bg-ink text-paper",
+  atencao: "bg-signal-soft text-signal-deep",
+  trocar: "bg-ink text-white",
 } as const;
 
 export function Laudo() {
+  const [approved, setApproved] = useState<Set<string>>(new Set(["pneu"]));
+  const [open, setOpen] = useState<string | null>(null);
+  const actionable = rows.filter((r) => r.state !== "ok");
+  const total = actionable.filter((r) => approved.has(r.id)).reduce((a, r) => a + r.price, 0);
+
+  function toggle(id: string) {
+    setApproved((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }
+
   return (
-    <figure className="relative rotate-[-1deg] rounded-md bg-white p-5 text-ink shadow-[0_30px_60px_-30px_rgb(var(--ink)/0.5)] sm:p-6">
-      <div className="flex items-start justify-between gap-4 border-b-2 border-ink pb-3">
+    <figure className="card overflow-hidden shadow-[0_40px_80px_-40px_rgb(var(--ink)/0.35)]">
+      <div className="flex items-center justify-between gap-4 border-b border-line bg-paper px-5 py-4">
         <div>
-          <p className="eyebrow text-muted">Laudo de inspeção</p>
-          <p className="mt-1 font-semibold">HB20 Comfort 1.0 · 2021</p>
+          <p className="label text-muted">Laudo · exemplo</p>
+          <p className="mt-0.5 font-semibold">HB20 Comfort 1.0 · 2021</p>
         </div>
-        <p className="num text-right font-mono text-xs text-muted">
+        <p className="num rounded-full bg-white px-3 py-1 font-mono text-xs text-muted">
           OS 004812
-          <br />
-          exemplo
         </p>
       </div>
-      <table className="mt-3 w-full text-left text-sm">
-        <caption className="sr-only">Exemplo de laudo com item, medição, limite e decisão</caption>
-        <thead>
-          <tr className="eyebrow text-muted">
-            <th scope="col" className="pb-2 font-medium">
-              Item
-            </th>
-            <th scope="col" className="hidden pb-2 font-medium sm:table-cell">
-              Medido
-            </th>
-            <th scope="col" className="hidden pb-2 font-medium sm:table-cell">
-              Limite
-            </th>
-            <th scope="col" className="pb-2 text-right font-medium">
-              Decisão
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((r) => (
-            <tr key={r.item} className="border-t border-line">
-              <th scope="row" className="py-2.5 pr-2 font-medium">
-                {r.item}
-                <span className="num block font-mono text-xs font-normal text-muted sm:hidden">
-                  {r.found} · {r.limit}
-                </span>
-              </th>
-              <td className="num hidden py-2.5 font-mono text-xs sm:table-cell">{r.found}</td>
-              <td className="num hidden py-2.5 font-mono text-xs text-muted sm:table-cell">
-                {r.limit}
-              </td>
-              <td className="py-2.5 text-right">
+      <ul className="divide-y divide-line">
+        {rows.map((r) => {
+          const isOn = approved.has(r.id);
+          return (
+            <li key={r.id} className="px-5 py-3.5">
+              <div className="flex items-center gap-3">
+                {r.state === "ok" ? (
+                  <span
+                    className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-paper-2 text-ok"
+                    aria-hidden
+                  >
+                    ✓
+                  </span>
+                ) : (
+                  <input
+                    type="checkbox"
+                    id={`laudo-${r.id}`}
+                    checked={isOn}
+                    onChange={() => toggle(r.id)}
+                    className="h-6 w-6 shrink-0 cursor-pointer accent-[rgb(var(--ink))]"
+                  />
+                )}
+                <label
+                  htmlFor={r.state === "ok" ? undefined : `laudo-${r.id}`}
+                  className="min-w-0 flex-1 cursor-pointer"
+                >
+                  <span className="block font-medium leading-tight">{r.item}</span>
+                  <span className="num block font-mono text-xs text-muted">
+                    {r.found} · {r.limit}
+                  </span>
+                </label>
                 <span
-                  className={`inline-block rounded-sm px-2 py-0.5 text-xs font-semibold ${stateClass[r.state]}`}
+                  className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${stateClass[r.state]}`}
                 >
                   {stateLabel[r.state]}
                 </span>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <figcaption className="mt-4 flex items-center gap-2 border-t-2 border-dashed border-line pt-3 text-xs text-muted">
-        <span
-          className="inline-flex h-5 w-5 items-center justify-center rounded-sm border border-ink text-ink"
-          aria-hidden
-        >
-          ✓
+              </div>
+              {r.proof ? (
+                <div className="mt-2 pl-9">
+                  <button
+                    type="button"
+                    aria-expanded={open === r.id}
+                    onClick={() => setOpen(open === r.id ? null : r.id)}
+                    className="min-h-[32px] text-xs font-semibold text-signal-deep underline underline-offset-4"
+                  >
+                    {open === r.id ? "Esconder prova" : "Ver prova"}
+                  </button>
+                  {open === r.id ? (
+                    <p className="mt-1 animate-rise text-sm text-muted">{r.proof}</p>
+                  ) : null}
+                </div>
+              ) : null}
+            </li>
+          );
+        })}
+      </ul>
+      <figcaption className="flex flex-wrap items-center justify-between gap-3 bg-ink px-5 py-4 text-white">
+        <span className="text-sm text-muted-dark" aria-live="polite">
+          Você aprovou {actionable.filter((r) => approved.has(r.id)).length} de {actionable.length}{" "}
+          itens
         </span>
-        Só os itens que você aprovar são feitos. Foto ou vídeo de cada “Trocar” vai no WhatsApp.
+        <span className="num font-display text-2xl font-extrabold">{money(total)}</span>
       </figcaption>
     </figure>
   );

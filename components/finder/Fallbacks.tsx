@@ -10,7 +10,6 @@ function Select({
   onChange,
   options,
   disabled,
-  dark,
   placeholder = "Selecione",
 }: {
   label: string;
@@ -18,16 +17,12 @@ function Select({
   onChange: (v: string) => void;
   options: { value: string; label: string }[];
   disabled?: boolean;
-  dark?: boolean;
   placeholder?: string;
 }) {
   const id = useId();
   return (
     <div>
-      <label
-        htmlFor={id}
-        className={`mb-1 block text-sm font-semibold ${dark ? "text-paper" : "text-ink"}`}
-      >
+      <label htmlFor={id} className={`mb-1 block text-sm font-semibold text-ink`}>
         {label}
       </label>
       <select
@@ -52,13 +47,7 @@ const uniq = (a: string[]) => Array.from(new Set(a)).sort((x, y) => x.localeComp
 const opts = (a: string[]) => a.map((v) => ({ value: v, label: v }));
 
 /** Busca encadeada: marca → modelo → versão → ano. */
-export function ManualSearch({
-  onVehicle,
-  dark,
-}: {
-  onVehicle: (v: Vehicle) => void;
-  dark?: boolean;
-}) {
+export function ManualSearch({ onVehicle }: { onVehicle: (v: Vehicle) => void }) {
   const [marca, setMarca] = useState("");
   const [modelo, setModelo] = useState("");
   const [versao, setVersao] = useState("");
@@ -85,7 +74,6 @@ export function ManualSearch({
     >
       <div className="grid gap-3 sm:grid-cols-2">
         <Select
-          dark={dark}
           label="Marca"
           value={marca}
           options={opts(marcas)}
@@ -98,7 +86,6 @@ export function ManualSearch({
           }}
         />
         <Select
-          dark={dark}
           label="Modelo"
           value={modelo}
           disabled={!marca}
@@ -110,7 +97,6 @@ export function ManualSearch({
           }}
         />
         <Select
-          dark={dark}
           label="Versão"
           value={versao}
           disabled={!modelo}
@@ -121,7 +107,6 @@ export function ManualSearch({
           }}
         />
         <Select
-          dark={dark}
           label="Ano"
           value={ano}
           disabled={!vehicle}
@@ -129,16 +114,13 @@ export function ManualSearch({
           onChange={setAno}
         />
       </div>
-      <p
-        role="alert"
-        className={`mt-2 min-h-[1.25rem] text-sm font-semibold ${dark ? "text-signal" : "text-danger"}`}
-      >
+      <p role="alert" className={`mt-2 min-h-[1.25rem] text-sm font-semibold text-danger`}>
         {err}
       </p>
-      <p className={`text-sm ${dark ? "text-muted-dark" : "text-muted"}`}>
+      <p className={`text-sm text-muted`}>
         Não achou seu carro na lista? Use a aba “Falar com a loja”.
       </p>
-      <button type="submit" className={`mt-3 ${dark ? "btn-signal" : "btn-ink"}`}>
+      <button type="submit" className={`btn-ink mt-3`}>
         Continuar
       </button>
     </form>
@@ -146,7 +128,7 @@ export function ManualSearch({
 }
 
 /** Busca pela medida lida no flanco: largura / perfil / aro. */
-export function SizeSearch({ onSize, dark }: { onSize: (size: string) => void; dark?: boolean }) {
+export function SizeSearch({ onSize }: { onSize: (size: string) => void }) {
   const parsed = useMemo(() => allSizes.map((s) => ({ s, ...parseSize(s)! })), []);
   const [w, setW] = useState("");
   const [p, setP] = useState("");
@@ -165,12 +147,11 @@ export function SizeSearch({ onSize, dark }: { onSize: (size: string) => void; d
         else setErr("Preencha largura, perfil e aro.");
       }}
     >
-      <p className={`mb-3 text-sm ${dark ? "text-muted-dark" : "text-muted"}`}>
+      <p className={`mb-3 text-sm text-muted`}>
         Está escrito no flanco do pneu, por exemplo <span className="font-mono">205/55 R16</span>.
       </p>
       <div className="grid grid-cols-3 gap-2">
         <Select
-          dark={dark}
           label="Largura"
           placeholder="—"
           value={w}
@@ -183,7 +164,6 @@ export function SizeSearch({ onSize, dark }: { onSize: (size: string) => void; d
           }}
         />
         <Select
-          dark={dark}
           label="Perfil"
           placeholder="—"
           value={p}
@@ -195,7 +175,6 @@ export function SizeSearch({ onSize, dark }: { onSize: (size: string) => void; d
           }}
         />
         <Select
-          dark={dark}
           label="Aro"
           placeholder="—"
           value={r}
@@ -204,13 +183,10 @@ export function SizeSearch({ onSize, dark }: { onSize: (size: string) => void; d
           onChange={setR}
         />
       </div>
-      <p
-        role="alert"
-        className={`mt-2 min-h-[1.25rem] text-sm font-semibold ${dark ? "text-signal" : "text-danger"}`}
-      >
+      <p role="alert" className={`mt-2 min-h-[1.25rem] text-sm font-semibold text-danger`}>
         {err}
       </p>
-      <button type="submit" className={`mt-1 ${dark ? "btn-signal" : "btn-ink"}`}>
+      <button type="submit" className={`btn-ink mt-1`}>
         Ver pneus
       </button>
     </form>

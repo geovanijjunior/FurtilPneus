@@ -49,7 +49,7 @@ export function SidewallGuide({
       onClick={(e) => {
         if (e.target === ref.current) onClose();
       }}
-      className="m-auto max-h-[calc(100dvh-1.5rem)] w-[min(40rem,calc(100vw-1.5rem))] overflow-y-auto rounded-lg bg-paper p-0 text-ink backdrop:bg-ink/80"
+      className="m-auto max-h-[calc(100dvh-1.5rem)] w-[min(40rem,calc(100vw-1.5rem))] overflow-y-auto rounded-2xl bg-paper p-0 text-ink backdrop:bg-ink/80"
     >
       <div className="p-5 sm:p-7">
         <div className="flex items-start justify-between gap-4">
@@ -80,7 +80,7 @@ export function SidewallGuide({
 
         <ol className="mt-4 grid gap-2 sm:grid-cols-2">
           {PARTS.map((p) => (
-            <li key={p.code} className="flex gap-3 rounded-md bg-paper-2 p-3">
+            <li key={p.code} className="flex gap-3 rounded-xl bg-paper-2 p-3">
               <span className="num w-12 shrink-0 font-mono text-lg font-semibold">{p.code}</span>
               <span>
                 <span className="block font-semibold">{p.title}</span>
@@ -91,7 +91,7 @@ export function SidewallGuide({
         </ol>
 
         {sizes?.length ? (
-          <p className="mt-4 rounded-md border-l-4 border-signal bg-ink p-3 text-paper">
+          <p className="mt-4 rounded-xl bg-ink p-4 text-white">
             No seu carro, procure por{" "}
             {sizes.map((s, i) => (
               <span key={s}>
