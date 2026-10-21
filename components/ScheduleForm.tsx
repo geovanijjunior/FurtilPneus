@@ -30,6 +30,7 @@ export function ScheduleForm() {
   const [periodo, setPeriodo] = useState("manha");
   const [obs, setObs] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [ready, setReady] = useState<string | null>(null);
   const id = useId();
 
   const store = stores.find((s) => s.slug === loja) ?? stores[0];
@@ -64,7 +65,10 @@ export function ScheduleForm() {
       `Dia: ${data.split("-").reverse().join("/")} — ${periodo === "manha" ? "manhã" : "tarde"}`,
       obs.trim() ? `Obs.: ${obs.trim()}` : null,
     ].filter(Boolean);
-    window.open(waLink(lines.join("\n"), store.whatsapp), "_blank", "noopener,noreferrer");
+    const href = waLink(lines.join("\n"), store.whatsapp);
+    setReady(href);
+    // Pop-up pode ser bloqueado; o link abaixo do botão fica como garantia.
+    window.open(href, "_blank", "noopener,noreferrer");
   }
 
   const err = (k: string) =>
@@ -221,6 +225,18 @@ export function ScheduleForm() {
         <p className="mt-2 text-sm text-muted">
           Abre o WhatsApp com a mensagem pronta. Você revisa antes de enviar; a loja confirma o
           horário.
+        </p>
+        <p role="status" className="mt-2">
+          {ready ? (
+            <a
+              href={ready}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold underline underline-offset-4"
+            >
+              O WhatsApp não abriu? Toque aqui para abrir a conversa.
+            </a>
+          ) : null}
         </p>
       </div>
     </form>
