@@ -6,7 +6,7 @@ A autenticação deve ser feita **antes de qualquer requisição à API de preen
 
 | Ambiente         | Método | URL                                                         |
 | ---------------- | ------ | ----------------------------------------------------------- |
-| QAS (Homologação) | `POST` | `https://suporte-dev.telemedicinaeinstein.com.br/api/session` |
+| QAS (Homologação) | `POST` | `https://sde.qas.telemedicinaeinstein.com.br/api/session` |
 | Produção          | `POST` | `https://sde.einstein.br/api/session`                         |
 
 ## 1.2 Requisição
@@ -22,7 +22,7 @@ A autenticação deve ser feita **antes de qualquer requisição à API de preen
 
 ```bash
 curl --request POST \
-  --url https://suporte-dev.telemedicinaeinstein.com.br/api/session \
+  --url https://sde.qas.telemedicinaeinstein.com.br/api/session \
   --header 'Content-Type: multipart/form-data' \
   --form username=<usuario> \
   --form password=<senha>
