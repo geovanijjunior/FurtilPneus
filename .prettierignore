@@ -3,3 +3,5 @@ docs/
 data/seed.json
 package-lock.json
 .next/
+.claude/
+.mcp.json
